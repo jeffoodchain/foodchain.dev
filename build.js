@@ -23,6 +23,11 @@ const POSTS_DIR = "posts";
 const DIST_DIR = "dist";
 const TEMPLATE_DIR = "templates";
 
+// Base path for GitHub Pages (set via env or defaults to "/")
+// For local: BASE_PATH="" bun run build
+// For GH Pages: BASE_PATH="/foodchain.dev" bun run build
+const BASE_PATH = process.env.BASE_PATH || "";
+
 // Ensure directories exist
 if (!fs.existsSync(DIST_DIR)) fs.mkdirSync(DIST_DIR, { recursive: true });
 if (!fs.existsSync(`${DIST_DIR}/posts`))
@@ -76,6 +81,7 @@ for (const file of files) {
   const finalHtml = baseTemplate
     .replace("{{title}}", `${attributes.title} | foodchain`)
     .replace("{{content}}", postHtml)
+    .replace(/\{\{base\}\}/g, BASE_PATH)
     .replace(/\{\{path\}\}/g, "../");
 
   fs.writeFileSync(`${DIST_DIR}/posts/${slug}.html`, finalHtml);
@@ -112,7 +118,7 @@ for (const category of categories) {
     ${categoryPosts
       .map(
         (p) => `<li>
-      <a href="posts/${p.slug}.html">${p.title}</a>
+      <a href="${BASE_PATH}/posts/${p.slug}.html">${p.title}</a>
       <time>${formatDate(p.date)}</time>
     </li>`
       )
@@ -125,7 +131,8 @@ for (const category of categories) {
 const indexHtml = baseTemplate
   .replace("{{title}}", "foodchain")
   .replace("{{content}}", indexTemplate.replace("{{posts}}", postListHtml))
-  .replace(/\{\{path\}\}/g, "");
+  .replace(/\{\{base\}\}/g, BASE_PATH)
+  .replace(/\{\{path\}\}/g, "/");
 
 fs.writeFileSync(`${DIST_DIR}/index.html`, indexHtml);
 console.log("Built: index.html");
@@ -137,7 +144,8 @@ for (const page of ["about", "favourites"]) {
     const pageHtml = baseTemplate
       .replace("{{title}}", `${page.charAt(0).toUpperCase() + page.slice(1)} | foodchain`)
       .replace("{{content}}", pageContent)
-      .replace(/\{\{path\}\}/g, "");
+      .replace(/\{\{base\}\}/g, BASE_PATH)
+      .replace(/\{\{path\}\}/g, "/");
     fs.writeFileSync(`${DIST_DIR}/${page}.html`, pageHtml);
     console.log(`Built: ${page}.html`);
   }
