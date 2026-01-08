@@ -24,7 +24,7 @@ jobs:
           bun-version: latest
 
       - run: bun install
-      - run: BASE_PATH="/foodchain.dev" bun run build
+      - run: bun run build
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

@@ -152,5 +152,11 @@ for (const page of ["about", "favourites"]) {
 fs.copyFileSync("styles.css", `${DIST_DIR}/styles.css`);
 console.log("Copied: styles.css");
 
+// Copy CNAME if exists (for custom domain)
+if (fs.existsSync("CNAME")) {
+  fs.copyFileSync("CNAME", `${DIST_DIR}/CNAME`);
+  console.log("Copied: CNAME");
+}
+
 console.log("\nBuild complete!");
 
