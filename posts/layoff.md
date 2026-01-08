@@ -1,5 +1,5 @@
 ---
-title: I got laid off
+title: 2026 New Year Present
 date: 2026-01-07
 category: betterdays
 ---
