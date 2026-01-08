@@ -81,8 +81,7 @@ for (const file of files) {
   const finalHtml = baseTemplate
     .replace("{{title}}", `${attributes.title} | foodchain`)
     .replace("{{content}}", postHtml)
-    .replace(/\{\{base\}\}/g, BASE_PATH)
-    .replace(/\{\{path\}\}/g, "../");
+    .replace(/\{\{base\}\}/g, BASE_PATH);
 
   fs.writeFileSync(`${DIST_DIR}/posts/${slug}.html`, finalHtml);
   console.log(`Built: posts/${slug}.html`);
@@ -131,8 +130,7 @@ for (const category of categories) {
 const indexHtml = baseTemplate
   .replace("{{title}}", "foodchain")
   .replace("{{content}}", indexTemplate.replace("{{posts}}", postListHtml))
-  .replace(/\{\{base\}\}/g, BASE_PATH)
-  .replace(/\{\{path\}\}/g, "/");
+  .replace(/\{\{base\}\}/g, BASE_PATH);
 
 fs.writeFileSync(`${DIST_DIR}/index.html`, indexHtml);
 console.log("Built: index.html");
@@ -144,8 +142,7 @@ for (const page of ["about", "favourites"]) {
     const pageHtml = baseTemplate
       .replace("{{title}}", `${page.charAt(0).toUpperCase() + page.slice(1)} | foodchain`)
       .replace("{{content}}", pageContent)
-      .replace(/\{\{base\}\}/g, BASE_PATH)
-      .replace(/\{\{path\}\}/g, "/");
+      .replace(/\{\{base\}\}/g, BASE_PATH);
     fs.writeFileSync(`${DIST_DIR}/${page}.html`, pageHtml);
     console.log(`Built: ${page}.html`);
   }
