@@ -1,8 +1,8 @@
-# dynamic programming - memorization (E)
-
-tags: leetcode, python
-Last updated time: 2025年10月2日 上午12:21
-summary: Dynamic Programming 101 (❌) Learning memorization to accelerate your code
+---
+title: Dynamic programming - memorisation
+date: 2026-01-10
+category: tech
+---
 
 ## **DP**
 
