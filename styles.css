@@ -172,6 +172,34 @@ nav a:hover {
   border-radius: 8px;
 }
 
+/* Tables */
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  font-size: 0.95rem;
+}
+
+.prose th,
+.prose td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  border: 1px solid var(--color-border);
+}
+
+.prose th {
+  background: #f0f0f0;
+  font-weight: 600;
+}
+
+.prose tr:nth-child(even) {
+  background: #f8f8f8;
+}
+
+.prose tr:hover {
+  background: #f0f0f0;
+}
+
 /* Post header */
 .post-header {
   margin-bottom: 2.5rem;
