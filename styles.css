@@ -236,6 +236,27 @@ code {
   font-size: 0.9em;
 }
 
+/* Copy button */
+.copy-btn {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+  font-family: var(--font-sans);
+  background: rgba(255, 255, 255, 0.1);
+  color: #999;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.copy-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+}
+
 /* Math */
 .katex-display {
   margin: 1.5rem 0;
