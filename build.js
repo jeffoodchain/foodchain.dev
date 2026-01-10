@@ -158,5 +158,19 @@ if (fs.existsSync("CNAME")) {
   console.log("Copied: CNAME");
 }
 
+// Copy images from posts/img to dist/posts/img
+const IMG_DIR = `${POSTS_DIR}/img`;
+if (fs.existsSync(IMG_DIR)) {
+  const distImgDir = `${DIST_DIR}/posts/img`;
+  if (!fs.existsSync(distImgDir)) {
+    fs.mkdirSync(distImgDir, { recursive: true });
+  }
+  const images = fs.readdirSync(IMG_DIR);
+  for (const img of images) {
+    fs.copyFileSync(`${IMG_DIR}/${img}`, `${distImgDir}/${img}`);
+  }
+  console.log(`Copied: ${images.length} images`);
+}
+
 console.log("\nBuild complete!");
 
