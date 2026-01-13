@@ -1,7 +1,7 @@
 :root {
   --font-sans: "Source Sans 3", -apple-system, BlinkMacSystemFont, "Segoe UI",
     Roboto, sans-serif;
-  --font-mono: "JetBrains Mono", "Fira Code", Consolas, monospace;
+  --font-mono: "IBM Plex Mono", monospace;
   --color-bg: #fafafa;
   --color-text: #1a1a1a;
   --color-text-muted: #666;
@@ -11,7 +11,7 @@
   --color-code-bg: #1e1e1e;
 }
 
-@import url("https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Source+Sans+3:wght@400;600;700&display=swap");
 
 * {
   margin: 0;
@@ -172,34 +172,6 @@ nav a:hover {
   border-radius: 8px;
 }
 
-/* Tables */
-.prose table {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 1.5rem 0;
-  font-size: 0.95rem;
-}
-
-.prose th,
-.prose td {
-  padding: 0.75rem 1rem;
-  text-align: left;
-  border: 1px solid var(--color-border);
-}
-
-.prose th {
-  background: #f0f0f0;
-  font-weight: 600;
-}
-
-.prose tr:nth-child(even) {
-  background: #f8f8f8;
-}
-
-.prose tr:hover {
-  background: #f0f0f0;
-}
-
 /* Post header */
 .post-header {
   margin-bottom: 2.5rem;
@@ -236,25 +208,34 @@ code {
   font-size: 0.9em;
 }
 
-/* Copy button */
-.copy-btn {
-  position: absolute;
-  top: 0.5rem;
-  right: 0.5rem;
-  padding: 0.25rem 0.5rem;
-  font-size: 0.75rem;
-  font-family: var(--font-sans);
-  background: rgba(255, 255, 255, 0.1);
-  color: #999;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 4px;
-  cursor: pointer;
-  transition: all 0.15s ease;
+/* Tables */
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  font-size: 0.95rem;
+  border: 1px solid #d0d7de;
 }
 
-.copy-btn:hover {
-  background: rgba(255, 255, 255, 0.2);
-  color: #fff;
+.prose th,
+.prose td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  border: 1px solid #d0d7de;
+}
+
+.prose th {
+  font-weight: 600;
+  background: #f6f8fa;
+  color: var(--color-text);
+}
+
+.prose td {
+  background: #fff;
+}
+
+.prose tr:hover td {
+  background: #f6f8fa;
 }
 
 /* Math */

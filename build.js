@@ -9,6 +9,9 @@ import katex from "@traptitech/markdown-it-katex";
 const md = new MarkdownIt({
   html: true,
   highlight: (str, lang) => {
+    if (lang === "mermaid") {
+      return `<pre class="mermaid">${str}</pre>`;
+    }
     if (lang && hljs.getLanguage(lang)) {
       try {
         return hljs.highlight(str, { language: lang }).value;
@@ -22,11 +25,6 @@ const md = new MarkdownIt({
 const POSTS_DIR = "posts";
 const DIST_DIR = "dist";
 const TEMPLATE_DIR = "templates";
-
-// Base path for GitHub Pages (set via env or defaults to "/")
-// For local: BASE_PATH="" bun run build
-// For GH Pages: BASE_PATH="/foodchain.dev" bun run build
-const BASE_PATH = process.env.BASE_PATH || "";
 
 // Ensure directories exist
 if (!fs.existsSync(DIST_DIR)) fs.mkdirSync(DIST_DIR, { recursive: true });
@@ -81,7 +79,7 @@ for (const file of files) {
   const finalHtml = baseTemplate
     .replace("{{title}}", `${attributes.title} | foodchain`)
     .replace("{{content}}", postHtml)
-    .replace(/\{\{base\}\}/g, BASE_PATH);
+    .replace(/\{\{base\}\}/g, "..");
 
   fs.writeFileSync(`${DIST_DIR}/posts/${slug}.html`, finalHtml);
   console.log(`Built: posts/${slug}.html`);
@@ -117,7 +115,7 @@ for (const category of categories) {
     ${categoryPosts
       .map(
         (p) => `<li>
-      <a href="${BASE_PATH}/posts/${p.slug}.html">${p.title}</a>
+      <a href="posts/${p.slug}.html">${p.title}</a>
       <time>${formatDate(p.date)}</time>
     </li>`
       )
@@ -130,7 +128,7 @@ for (const category of categories) {
 const indexHtml = baseTemplate
   .replace("{{title}}", "foodchain")
   .replace("{{content}}", indexTemplate.replace("{{posts}}", postListHtml))
-  .replace(/\{\{base\}\}/g, BASE_PATH);
+  .replace(/\{\{base\}\}/g, "");
 
 fs.writeFileSync(`${DIST_DIR}/index.html`, indexHtml);
 console.log("Built: index.html");
@@ -142,7 +140,7 @@ for (const page of ["about", "favourites"]) {
     const pageHtml = baseTemplate
       .replace("{{title}}", `${page.charAt(0).toUpperCase() + page.slice(1)} | foodchain`)
       .replace("{{content}}", pageContent)
-      .replace(/\{\{base\}\}/g, BASE_PATH);
+      .replace(/\{\{base\}\}/g, "");
     fs.writeFileSync(`${DIST_DIR}/${page}.html`, pageHtml);
     console.log(`Built: ${page}.html`);
   }
@@ -151,26 +149,6 @@ for (const page of ["about", "favourites"]) {
 // Copy styles
 fs.copyFileSync("styles.css", `${DIST_DIR}/styles.css`);
 console.log("Copied: styles.css");
-
-// Copy CNAME if exists (for custom domain)
-if (fs.existsSync("CNAME")) {
-  fs.copyFileSync("CNAME", `${DIST_DIR}/CNAME`);
-  console.log("Copied: CNAME");
-}
-
-// Copy images from posts/img to dist/posts/img
-const IMG_DIR = `${POSTS_DIR}/img`;
-if (fs.existsSync(IMG_DIR)) {
-  const distImgDir = `${DIST_DIR}/posts/img`;
-  if (!fs.existsSync(distImgDir)) {
-    fs.mkdirSync(distImgDir, { recursive: true });
-  }
-  const images = fs.readdirSync(IMG_DIR);
-  for (const img of images) {
-    fs.copyFileSync(`${IMG_DIR}/${img}`, `${distImgDir}/${img}`);
-  }
-  console.log(`Copied: ${images.length} images`);
-}
 
 console.log("\nBuild complete!");
 
