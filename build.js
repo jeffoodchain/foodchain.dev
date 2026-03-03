@@ -28,8 +28,6 @@ const TEMPLATE_DIR = "templates";
 
 // Ensure directories exist
 if (!fs.existsSync(DIST_DIR)) fs.mkdirSync(DIST_DIR, { recursive: true });
-if (!fs.existsSync(`${DIST_DIR}/posts`))
-  fs.mkdirSync(`${DIST_DIR}/posts`, { recursive: true });
 
 // Read templates
 const baseTemplate = fs.readFileSync(`${TEMPLATE_DIR}/base.html`, "utf-8");
@@ -53,36 +51,47 @@ function slugify(filename) {
 // Collect all posts
 const posts = [];
 
-// Process markdown files
-const files = fs.readdirSync(POSTS_DIR).filter((f) => f.endsWith(".md"));
+// Process markdown files from subdirectories (e.g. posts/tech/, posts/life/)
+const categories_dirs = fs
+  .readdirSync(POSTS_DIR)
+  .filter((f) => fs.statSync(path.join(POSTS_DIR, f)).isDirectory() && f !== "img");
 
-for (const file of files) {
-  const content = fs.readFileSync(path.join(POSTS_DIR, file), "utf-8");
-  const { attributes, body } = fm(content);
-  const html = md.render(body);
-  const slug = slugify(file);
+for (const category of categories_dirs) {
+  const categoryDir = path.join(POSTS_DIR, category);
+  const distCategoryDir = path.join(DIST_DIR, "posts", category);
+  if (!fs.existsSync(distCategoryDir))
+    fs.mkdirSync(distCategoryDir, { recursive: true });
 
-  posts.push({
-    slug,
-    title: attributes.title,
-    date: new Date(attributes.date),
-    category: attributes.category,
-    html,
-  });
+  const files = fs.readdirSync(categoryDir).filter((f) => f.endsWith(".md"));
 
-  // Generate post HTML
-  const postHtml = postTemplate
-    .replace("{{title}}", attributes.title)
-    .replace("{{date}}", formatDate(attributes.date))
-    .replace("{{content}}", html);
+  for (const file of files) {
+    const content = fs.readFileSync(path.join(categoryDir, file), "utf-8");
+    const { attributes, body } = fm(content);
+    const html = md.render(body);
+    const slug = slugify(file);
 
-  const finalHtml = baseTemplate
-    .replace("{{title}}", `${attributes.title} | foodchain`)
-    .replace("{{content}}", postHtml)
-    .replace(/\{\{base\}\}/g, "..");
+    posts.push({
+      slug,
+      title: attributes.title,
+      date: new Date(attributes.date),
+      category,
+      html,
+    });
 
-  fs.writeFileSync(`${DIST_DIR}/posts/${slug}.html`, finalHtml);
-  console.log(`Built: posts/${slug}.html`);
+    // Generate post HTML
+    const postHtml = postTemplate
+      .replace("{{title}}", attributes.title)
+      .replace("{{date}}", formatDate(attributes.date))
+      .replace("{{content}}", html);
+
+    const finalHtml = baseTemplate
+      .replace("{{title}}", `${attributes.title} | foodchain`)
+      .replace("{{content}}", postHtml)
+      .replace(/\{\{base\}\}/g, "../..");
+
+    fs.writeFileSync(`${distCategoryDir}/${slug}.html`, finalHtml);
+    console.log(`Built: posts/${category}/${slug}.html`);
+  }
 }
 
 // Sort posts by date (newest first)
@@ -115,7 +124,7 @@ for (const category of categories) {
     ${categoryPosts
       .map(
         (p) => `<li>
-      <a href="posts/${p.slug}.html">${p.title}</a>
+      <a href="posts/${p.category}/${p.slug}.html">${p.title}</a>
       <time>${formatDate(p.date)}</time>
     </li>`
       )
