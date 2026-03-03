@@ -1,3 +1,8 @@
+---
+title: Event Loop in JS
+date: 2026-03-03
+category: tech
+---
 
 # Event loop
 
