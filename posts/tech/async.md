@@ -1,12 +1,14 @@
 ---
-title: single-threaded asynchronous
-date: 2026-03-01
+title: single-threaded asynchronous (WIP)
+date: 2026-01-
 category: tech
 ---
 
 normal event loop in javascript
 
-sometimes when executing a program, you have to wait for the response from a https method. However, if you gonna wait 1 minute for the data to return back, the UX would be extremely bad. Imagining you wait for one minute just for a image to show up in a website, and you might think this website is broken.
+sometimes when executing a program, you have to wait for the response from any I/O, network response, file reads or database queries, etc. 
+
+However, if you gonna wait 1 minute for the data to return back, the UX would be extremely bad. Imagining you wait for one minute just for a image to show up in a website, and you might think this website is broken.
 
 Therefore, we would use asynchronous & event loops to maintain this stuff.
 
@@ -18,7 +20,7 @@ we have two functions
 - B: an asynchronous function
 
 ```js
-async main() {
+async function main() {
     A();
     B();
     A();
