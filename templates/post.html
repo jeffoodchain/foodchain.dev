@@ -1,8 +1,19 @@
-<article class="prose">
-  <div class="post-header">
-    <h1>{{title}}</h1>
-    <time>{{date}}</time>
-  </div>
+<div class="fade-up" style="animation-duration: 0.4s">
+  <a href="{{base}}/blog.html" class="back">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 5.5 5.5a5.5 5.5 0 0 1-5.5 5.5H11"/></svg>
+    back
+  </a>
+</div>
+
+<header class="post-header">
+  <h1>{{title}}</h1>
+  <p class="meta">
+    <time datetime="{{isoDate}}">{{date}}</time>
+    <span class="sep">·</span>
+    <span class="category">{{category}}</span>
+  </p>
+</header>
+
+<article class="prose blog-content">
   {{content}}
 </article>
-

@@ -1,0 +1,45 @@
+<a href="{{base}}/" class="back">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 5.5 5.5a5.5 5.5 0 0 1-5.5 5.5H11"/></svg>
+  back
+</a>
+<h1 class="page-title">writing</h1>
+<p class="page-desc loose">
+  Notes about tech, thoughts about life, and things I am still figuring out.
+</p>
+
+<section class="writing fade-up" style="animation-delay: 0.6s" id="writing">
+  <div class="filters">
+    <div class="search group static">
+      <span class="corners" aria-hidden="true"></span>
+      <div class="field">
+        <svg class="icon-search" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        <input type="text" id="search" placeholder="search posts…" autocomplete="off" aria-label="search posts" />
+        <button type="button" class="clear" id="search-clear" aria-label="clear search">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="dropdown" id="category-dropdown">
+      <button type="button" class="group" aria-haspopup="listbox" aria-expanded="false">
+        <span class="corners" aria-hidden="true"></span>
+        <span class="label">all</span>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+      </button>
+      <div class="menu" role="listbox">
+        <div class="menu-inner group static">
+          <span class="corners" aria-hidden="true"></span>
+          <button type="button" role="option" data-value="" aria-selected="true">all posts</button>
+          {{categoryOptions}}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {{posts}}
+
+  <div class="empty">
+    <p>no posts match your filters.</p>
+    <button type="button" id="reset-filters">clear filters</button>
+  </div>
+</section>
