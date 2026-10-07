@@ -4,32 +4,46 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{{title}}</title>
+    <meta name="description" content="{{description}}" />
+    <meta name="color-scheme" content="light dark" />
+    <meta property="og:title" content="{{title}}" />
+    <meta property="og:description" content="{{description}}" />
+    <meta property="og:type" content="{{ogType}}" />
+    <meta property="og:site_name" content="foodchain" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:creator" content="@jeffoodchain" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600;900&family=Instrument+Serif:ital@0;1&display=swap"
+    />
     <link rel="stylesheet" href="{{base}}/styles.css" />
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css"
     />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/styles/github-dark.min.css"
-    />
   </head>
   <body>
-    <div class="container">
-      <header>
-        <a href="{{base}}/" class="logo">Jeff == foodchain Chung</a>
-        <nav>
-          <a href="{{base}}/about.html">About</a>
-          <a href="{{base}}/favourites.html">Favourites</a>
-        </nav>
-      </header>
-      <main>
-        {{content}}
-      </main>
-    </div>
+    <main class="page">
+      {{content}}
+    </main>
+
+    <footer class="site-footer" aria-hidden="true">
+      <span class="big">foodchain</span>
+      <div class="grid"></div>
+      <div class="gradient"></div>
+    </footer>
+
+    <script src="{{base}}/site.js" defer></script>
     <script type="module">
-      import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
-      mermaid.initialize({ startOnLoad: true, theme: 'dark' });
+      if (document.querySelector("pre.mermaid")) {
+        const dark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+        const { default: mermaid } = await import(
+          "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs"
+        );
+        mermaid.initialize({ startOnLoad: true, theme: dark ? "dark" : "neutral" });
+      }
     </script>
   </body>
 </html>
